@@ -89,3 +89,22 @@ const loginUser = async (req, res) => {
     }
 },
 
+//Logout de usuarios
+const logoutUser = async (req, res) => {
+
+        try {
+            const token = req.headers.authorization;
+    
+            let logoutUser = await UserModel.findOne({ token: token });
+    
+            logoutUser.token = null;
+            logoutUser.save();
+    
+            res.send('Has cerrado sesión.')
+    
+        } catch (error) {
+            console.log(error)
+            res.status(500).send({ message: 'No se ha podido cerrar sesión.' });
+        }
+    
+    };
