@@ -59,3 +59,33 @@ const registerUser = async (req, res) => {
 	};
 };
 
+//Login de usuarios
+const loginUser = async (req, res) => {
+    let user = await UserModel.findOne({
+        email: req.body.email
+    });
+
+    if (!user) {
+        res.send({
+            message: "No existe el usuario"
+        })
+    } else {
+
+        let passwordOk = await bcrypt.compare(req.body.password, user.password);
+
+        if (!passwordOk) {
+            res.send({
+                message: "Credenciales incorrectas"
+
+            })
+        } else {
+            res.send({
+                firstname: user.firstname,
+                email: user.email
+            });
+            user.token = user._id
+            await user.save();
+        }
+    }
+},
+
