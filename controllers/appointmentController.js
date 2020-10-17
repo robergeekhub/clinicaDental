@@ -50,3 +50,23 @@ async cancel (req, res){
         })
     }
 },
+
+//Ver citas
+async view (req, res){
+    try {
+        const appointment = await AppointmentModel.find({
+            iduser: req.params.token
+        });
+        res.status(201).send({appointment});
+        
+    } catch (error) {
+        res.status(500).send({
+            error,
+            message: 'There was a problem trying to view the appointments'
+        })
+    }
+}
+
+}
+
+module.exports = CitaController;
