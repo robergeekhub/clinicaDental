@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
-const auth = require('./middleware/auth');
+const cors = require('./middleware/cors');
 
-app.use(express.json()); ////Middleware
+//Middleware
+app.use(express.json()); 
+app.use(cors);
+
+//db connection
+const dbconnect = require('./config/dbconnect');
+dbconnect();
+
+
 
 app.listen(3000, () => console.log('Server running.'))
 
