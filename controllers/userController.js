@@ -33,9 +33,10 @@ const registerUser = async (req, res) => {
             username: bodyData.username,
             lastname: bodyData.lastname,
 		    email: bodyData.email,
-            password: hashPass
-            //token,etc...
-        }).save();
+            password: hashPass,
+            phone: bodyData.phone
+
+         }).save();
 
         res.send({
             message: "Account created successfully.",

@@ -13,7 +13,7 @@ const AppointmentSchema = mongoose.Schema({
     notes:{
         type:String,
     },
-    userId:{
+    iduser:{
         type:String,
     }
 })

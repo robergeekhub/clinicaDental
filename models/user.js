@@ -24,11 +24,9 @@ const UserSchema=mongoose.Schema({
     },
     address:{
         type:Number,
-        required:false
     },
     token:{
         type:String,
-        required:true
     }
 })
 
