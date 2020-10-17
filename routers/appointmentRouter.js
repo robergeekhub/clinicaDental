@@ -1,12 +1,18 @@
 const router = require('express').Router();
-const UserController = require('../controllers/userController');
+const AppointmentController = require('../controllers/appointmentController');
 
-//Endpoint de registro
-router.post('/registro', ClienteController.registro);
-//Endpoint de Login
-router.post('/login', ClienteController.login);
-//Endpoint Logout
-router.put('/logout', ClienteController.logout);
+
+//Endpoint de creación de cita
+router.post('/createAppointment', AppointmentController.createAppointment);
+
+//Endpoint de eliminación de cita
+router.delete('/cancel/:_id', AppointmentController.cancel);
+
+//Endpoint de citas pendientes
+router.get('/view/:token', AppointmentController.view);
+
+
 
 
 module.exports = router;
+
