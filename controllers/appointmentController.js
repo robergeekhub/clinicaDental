@@ -31,3 +31,22 @@ const AppointmentController = {
         }
     }
 
+},
+
+//Cancelar citas
+async cancel (req, res){
+    try {
+        await AppointmentModel.findByIdAndDelete({
+            _id:req.params._id
+        });
+        res.status(201).send({
+            message: `The appointment has been canceled successfully`
+        });         
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            error,
+            message: 'There was a problem trying to deleted the appointment'
+        })
+    }
+},
