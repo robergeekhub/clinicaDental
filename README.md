@@ -25,3 +25,7 @@ PUT ----> "users/logout" <br>
 POST ---> "appointment/newAppointment/<email>" <br>
 DELETE ---> "appointment/newAppointment/<id>" <br>
 GET ---> "appointment/newAppointment/<token_id>" <br>
+
+Ejemplo:
+
+![](r.gif)
