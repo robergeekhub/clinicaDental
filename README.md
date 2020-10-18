@@ -26,6 +26,6 @@ POST ---> "appointment/newAppointment/<email>" <br>
 DELETE ---> "appointment/newAppointment/<id>" <br>
 GET ---> "appointment/newAppointment/<token_id>" <br>
 
-Ejemplo:
+Example user registration:
 
-![](r.gif)
+![registration](https://user-images.githubusercontent.com/70948045/96374276-07383480-1172-11eb-92cb-999f004fb514.gif)
