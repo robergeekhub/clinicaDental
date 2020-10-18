@@ -34,6 +34,7 @@ const AppointmentController = {
 },
 
 //Cancelar citas
+
 async cancel (req, res){
     try {
         await AppointmentModel.findByIdAndDelete({
@@ -52,6 +53,7 @@ async cancel (req, res){
 },
 
 //Ver citas
+
 async view (req, res){
     try {
         const appointment = await AppointmentModel.find({
