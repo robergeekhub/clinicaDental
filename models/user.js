@@ -20,13 +20,13 @@ const UserSchema=mongoose.Schema({
     },
     phone:{
         type:Number,
-        required:true
     },
     address:{
         type:Number,
     },
     token:{
         type:String,
+        default: "",
     }
 })
 

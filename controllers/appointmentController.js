@@ -6,7 +6,7 @@ const AppointmentModel = require('../models/appointment');
 const AppointmentController = {
     async newappointment (req, res) {
         let user = await UserModel.findOne({
-            email:req.body.email
+            email:req.params.email
         });
         if (!user.token){
             res.status(400).send({
@@ -19,7 +19,7 @@ const AppointmentController = {
                     status: req.body.status,
                     date: req.body.date,
                     notes: req.body.notes,
-                    iduser: user.token
+                    token_id: user.token
                 }).save();
                     res.status(201).send(appointment);
         } catch (error) {
@@ -69,4 +69,4 @@ async view (req, res){
 
 }
 
-module.exports = CitaController;
+module.exports = AppointmentController;

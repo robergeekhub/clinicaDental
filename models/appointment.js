@@ -7,7 +7,7 @@ const AppointmentSchema = mongoose.Schema({
         required:true
     },
     date:{
-        type:Data,
+        type:String,
         required:true
     },
     notes:{

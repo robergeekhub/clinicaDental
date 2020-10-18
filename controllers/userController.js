@@ -1,25 +1,23 @@
-const UserModel=require('../models/User');
-const mongoose=require('mongoose');
+const UserModel = require('../models/user');
 const bcrypt = require("bcryptjs");
-const fs=require('fs');
 
 //Registrar usuario
-const registerUser = async (req, res) => {
-    
+const UserController = {
+    async registration (req, res) {
     let bodyData = req.body;
     let regExEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
     let regExPassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
     
     if(!regExEmail.test(bodyData.email)){
         res.send({
-            message: "El email introducido no es válido"
+            message: "The email entered is not valid"
         });
         return;
     }
 
     if(!regExPassword.test(bodyData.password)){
         res.send({
-            message: "El password introducido no es válido"
+            message: "The password entered is not valid"
         });
         return;
     }
@@ -38,76 +36,64 @@ const registerUser = async (req, res) => {
 
          }).save();
 
-        res.send({
-            message: "Account created successfully.",
-            username: user.username
-        });
-
-    } catch (err) {
-        
-        if (err.code === 11000) { // E11000 duplicate key error (unique true)
-			
-			res.status(409); // conflict
-			res.send({
-				error: "Email already used."
-			});
-			
-		} else {
-			
-			res.send(err);
-			
-		}		
-	};
-};
-
+         res.status(201).send(user);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                error,
+                message: 'There was a problem trying to register the client'
+            })
+        }
+    },
 //Login de usuarios
-const loginUser = async (req, res) => {
-    let user = await UserModel.findOne({
+    async login (req, res) {
+    let userFound = await UserModel.findOne({
         email: req.body.email
     });
 
-    if (!user) {
+    if (!userFound) {
         res.send({
-            message: "No existe el usuario"
+            message: "User does not exist"
         })
     } else {
 
-        let passwordOk = await bcrypt.compare(req.body.password, user.password);
+        let passwordOk = await bcrypt.compare(req.body.password, userFound.password);
 
         if (!passwordOk) {
             res.send({
-                message: "Credenciales incorrectas"
+                message: "Bad credentials"
 
             })
         } else {
-            res.send({
-                firstname: user.firstname,
-                email: user.email
-            });
-            user.token = user._id
-            await user.save();
+            userFound.token = userFound._id;
+                await userFound.save();
+                res.send({
+                    nombre: userFound.nombre,
+                    email: userFound.email
+                })
+            }
+            
         }
-    }
-},
+
+    },
 
 //Logout de usuarios
-const logoutUser = async (req, res) => {
+    async logout (req, res) {
 
         try {
-            const token = req.headers.authorization;
-    
-            let logoutUser = await UserModel.findOne({ token: token });
-    
-            logoutUser.token = null;
-            logoutUser.save();
-    
-            res.send('Has cerrado sesión.')
-    
+            await UserModel.findOneAndUpdate (req.body.email, {token:null}, {new:true, useFindAndModify:false});
+             res.status(201).send({
+                 message: 'Logout is OK'
+             });
         } catch (error) {
-            console.log(error)
-            res.status(500).send({ message: 'No se ha podido cerrar sesión.' });
+            console.error(error);
+            res.status(500).send({
+                error,
+                message: 'There was a problem trying to logout the client'
+            })            
         }
-    
-    };
+    }
+
+}
 
     module.exports = UserController;
