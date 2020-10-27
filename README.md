@@ -30,4 +30,4 @@ Example user registration:
 
 ![registration](https://user-images.githubusercontent.com/70948045/96374276-07383480-1172-11eb-92cb-999f004fb514.gif)
 
-link to heroku:https://dashboard.heroku.com/apps/clinicadental-heroku
+link to heroku:https://clinicadentalfront.herokuapp.com/
